@@ -2,7 +2,8 @@ define([
   'app',
   // Load Controllers here
   'controllers/dashboard',
-  'controllers/floorMap'    
+  'controllers/floorMap',
+  'controllers/employeeFinder' 
 ], 
        
 
@@ -33,6 +34,13 @@ function (app) {
             cache: false
       })
       
+      
+       .state('findmylocation', {
+            url: '/findmylocation',
+            templateUrl: 'app/templates/employeeFinder.html',
+            controller: 'empFinderCtrl',
+            cache: false
+      })
       
       
     }
