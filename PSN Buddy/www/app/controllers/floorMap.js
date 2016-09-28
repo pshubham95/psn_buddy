@@ -69,6 +69,18 @@ app.controller('floorMapCtrl', function($scope){
             $scope.image_name = "Seventh Floor Plan";
         }
     }
+    
+    
+    
+    $scope.zoom = function(zm){
+        
+        var img=document.getElementById("pic");
+        var wid=img.width;
+        var ht=img.height;
+        
+        img.style.width=(wid*zm)+"px";
+        img.style.height=(ht*zm)+"px";
+    }
 })
 
 });

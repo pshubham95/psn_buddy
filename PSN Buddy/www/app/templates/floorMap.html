@@ -13,8 +13,16 @@
                 <option ng-repeat="floor in floors" value="{{floor.floor_number}}">{{floor.floor_name}}</option>
            </select>
         </form>  
-        <div ng-show = "displayMap">
-            <img src={{image_id}} alt={{image_name}} align="center" width="300" height="150" >
+        
+        <div ng-show = "displayMap">    
+            <table>
+                <tr>
+                    <img id = "pic"  src={{image_id}} alt={{image_name}} align="center" width="300" height="150" >
+                    <img src="img/zoom-out.png" align="center"  height="20" ng-click = "zoom(0.9);"/> 
+                    <img src="img/zoom-in.png"  align="center" height="20" ng-click = "zoom(1.1);"/>
+                </tr>
+                
+            </table>
         </div>      
       </div>
     </ion-content>
