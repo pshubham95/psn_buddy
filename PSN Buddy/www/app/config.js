@@ -6,7 +6,7 @@ define([
 		  $scope.menuItems = [{
 			  				name:"Dash Board",url:"/dashboard"},
 			  				{name:"Floor Map",url:"/floormap"},
-			  				{name: "Finy My Location", url: "/findmylocation"}];
+			  				{name: "Find My Location", url: "/findmylocation"}];
 		  
 		  $rootScope.toggleLeft = function() {
 	    	    $ionicSideMenuDelegate.toggleLeft();
