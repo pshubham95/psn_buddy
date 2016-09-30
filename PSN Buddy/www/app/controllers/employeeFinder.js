@@ -1,23 +1,22 @@
-define(['app', ['services/employeeFinderService','ngResource']], function (app) {
+define(['app', 'services/employeeFinderService'], 
+       
+function (app) {
   'use strict';
-
-app.controller('empFinderCtrl', function($scope){
     
+app.controller('empFinderCtrl', ['$scope', 'empFinderService', function($scope, empFinderService){    
      $scope.data={};
     
-    $scope.doSearch = function(){
+     $scope.doSearch = function(){
         
-        var sso_selection =  $scope.data.sso;
+        var sso_selection = $scope.data.sso;
         var fn_selection = $scope.data.firstName;
         var ln_selection = $scope.data.lastName;
         
-        alert("sso_selection---------" +sso_selection +"--------fn_selection--------" +fn_selection + "-----------ln_selection---------" +ln_selection);
-        
-        
+       // empFinderFactory.get(sso_selection,fn_selection,ln_selection);
     }
     
     
-})
+}])
 
 
 });
