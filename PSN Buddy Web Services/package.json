@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/psngit/psn_buddy/issues"
   },
-  "homepage": "https://github.com/psngit/psn_buddy#readme"
+  "homepage": "https://github.com/psngit/psn_buddy#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "pg": "^6.1.0"
+  }
 }
