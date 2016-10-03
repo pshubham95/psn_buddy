@@ -1,0 +1,10 @@
+---
+applications:
+  - name: employee-webservice-abhi
+    buildpack: nodejs_buildpack
+    memory: 128M
+    command:  node server.js
+#   services:
+#      - 212393777-timeseries
+    env:
+      node_env: cloud
