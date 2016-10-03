@@ -36,6 +36,18 @@
                 <button ng-click = "doSearch();"> SEARCH </button>
              </div>
             
+            
+            
+            <div ng-if = "showResult" >
+                <ion-list>
+                    <ion-item ng-repeat="emp in empList" type="item-text-wrap" class="item-avatar"
+                       ng-click = "showAlert($index);">
+                        <img src="img/emp_img.jpg"/>
+                        {{emp.lastName}} , {{emp.firstName}} 
+                    </ion-item>
+                </ion-list>
+            </div>
+            
         </form>  
       </div>
     </ion-content>
