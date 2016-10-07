@@ -21,3 +21,47 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.bar-footer{
+	#qrScanBtn{
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+ion-header-bar{
+	.title{
+		margin-left: 0px;
+	}
+	.ion-qr-scanner{
+		.badge{
+			top: -10px;
+		    padding: 0px;
+		    width: 20px;
+		    height: 20px;
+		    line-height: 20px;
+		    display: inline-block;
+		}
+	}
+}
+#qrCodeContent, ion-modal-view{
+	ion-spinner{
+	    display: block;
+	    text-align: center;
+	    margin-top: 20px;
+	}
+	.card{
+		.item-text-wrap{
+			padding: 0px;
+			.col{
+				text-align: center;
+			}
+		}
+	}
+}
+qr-scanner{
+	video{
+		width: 100%    !important;
+  		height: auto   !important;
+	}
+}
+

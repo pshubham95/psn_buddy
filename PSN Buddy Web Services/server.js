@@ -19,7 +19,8 @@ app.all('*', function(req, res, next) {
     next();
 });
 
-app.get('/campus/:city', qrrage.findCampusByCity);
+app.get('/campusList/:city?', qrrage.getCampusList);
+app.get('/facilities/:campusId', qrrage.getFacilities);
 
 
 app.set('port', process.env.PORT || 5000);

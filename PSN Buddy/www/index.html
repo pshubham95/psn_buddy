@@ -26,20 +26,21 @@
     <!-- The nav bar that will be updated as we navigate -->
 
     <!-- where the initial view template will be rendered -->
-    <ion-side-menus>
+    <ion-side-menus enable-menu-with-back-views="false">
 	  <!-- Left menu -->
-	  <ion-side-menu side="left">
+	  <ion-side-menu side="left" >
 	  	<ion-list ng-controller="SideMenuCtrl">
-		  <ion-item ng-repeat="menuItem in menuItems track by $index" ng-href="#{{menuItem.url}}">
+		  <ion-item nav-transition="none" menu-close ng-repeat="menuItem in menuItems track by $index" ng-href="#{{menuItem.url}}" ng-click="toggleLeft()">
 		    <h2 ng-bind="menuItem.name"></h2>
 		  </ion-item>
 		</ion-list>
 	  </ion-side-menu>
 	
 	  <ion-side-menu-content>
-	  <!-- Main content, usually <ion-nav-view> -->
-	    <ion-nav-view>
-	    </ion-nav-view>
+          <ion-nav-bar class="bar-positive" align-title="center">
+            <ion-nav-back-button class="button-icon ion-ios-arrow-left">Back</ion-nav-back-button>
+          </ion-nav-bar>
+          <ion-nav-view></ion-nav-view>
 	  </ion-side-menu-content>
 	  
 	</ion-side-menus>

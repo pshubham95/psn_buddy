@@ -3,11 +3,11 @@ var path = require('path');
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
-exports.findCampusByCity = function (req, res, next) {
+exports.getCampusList = function (req, res, next) {
 
          var results = [];
          var city = req.params.city;
-         console.log(city)
+         console.log(city);
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
         // Handle connection errors
@@ -19,7 +19,12 @@ exports.findCampusByCity = function (req, res, next) {
         }
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM psn.campus WHERE upper(city)=$1 ORDER BY id ASC;", [city.toUpperCase()]);
+        var query = null;
+        if(city){
+        	query = client.query("SELECT * FROM psn.campus WHERE upper(city)=$1 ORDER BY name ASC;", [city.toUpperCase()]);
+        }else{
+        	query = client.query("SELECT * FROM psn.campus ORDER BY id ASC;", []);        	
+        }
 
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -36,8 +41,8 @@ exports.findCampusByCity = function (req, res, next) {
 
 };
 
-exports.findById = function (req, res, next) {
-    var id = req.params.id;
+exports.getFacilities = function (req, res, next) {
+    var id = req.params.campusId;
     var results = [];
 
     // Get a Postgres client from the connection pool
@@ -50,7 +55,7 @@ exports.findById = function (req, res, next) {
         }
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM employees WHERE id=($1) ORDER BY id ASC;", [id]);
+        var query = client.query("SELECT * FROM psn.facilities WHERE campus_id=($1) ORDER BY name ASC;", [id]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
