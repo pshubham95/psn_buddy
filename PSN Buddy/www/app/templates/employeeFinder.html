@@ -1,40 +1,73 @@
-<ion-view title="Employee Finder" id="findmylocation" class=" ">
-    
-    <ion-header-bar align-title="left" class="bar-positive">
-		<button class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
-  		<h1 class="title">Employee Finder</h1>
-	</ion-header-bar>
+<ion-view title="Find My Location" id="findmylocation" class=" ">
+
+    <ion-nav-buttons side="left">
+      <button class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
+    </ion-nav-buttons>
     
     <ion-content padding="true" class="has-header">
-      <div ng-controller = "empFinderCtrl">
+      <div>
         <form id="empFinder_form1" class="list">
-            <label for= "empSearchFilter"> Search By :  </label>
-            <select id ="empSearchFilter" ng-model="searchCriteria" ng-init="searchCriteria = ''" >
-                <option value="">--Select--</option>
-                <option value="sso">Employee SSO</option>
-                <option value="first_name">Employee First Name</option>
-                <option value="last_name">Employee Last Name</option>
-           </select>
             
-            
-            <div id = "sso" ng-if = "searchCriteria == 'sso' "> 
-                <label for = "sso_search"> SSO :  </label>
-                <input id="sso_search" type="text" placeholder="Enter SSO" ng-model = "data.sso" maxlength="9" />      
+            <div class = "list">
+                <label class = "item item-input item-select item-stable">
+                    <div class = "input-label">
+                        Select By :
+                    </div>
+		
+                <select id ="empSearchFilter" ng-model="searchCriteria" ng-init="searchCriteria = ''"  ng-change = "resetPrev();">
+                    <option value="">--Select--</option>
+                    <option value="sso">Employee SSO</option>
+                    <option value="first_name">Employee First Name</option>
+                    <option value="last_name">Employee Last Name</option>
+                </select>
+                </label>
             </div>
             
-            <div id = "first_name" ng-if = "searchCriteria == 'first_name' ">
-                <label for = "firstName_search"> First Name :  </label>
-                <input type="text" id="firstName_search"  placeholder="Enter First Name" ng-model = "data.firstName" />   
+           
+
+             <div class = "list" id = "sso" ng-if = "searchCriteria == 'sso' ">
+                <label class = "item item-input">
+                    <div class = "input-label">
+                        SSO : 
+                    </div>
+                    <input id="sso_search" type="text" placeholder="Enter SSO" ng-model = "data.sso" maxlength="9" /> 
+                </label>
             </div>
             
-            <div id = "last_name" ng-if = "searchCriteria == 'last_name' ">
-                <label for = "lastName_search"> Last Name :  </label>
-                <input id="lastName_search" type="text" placeholder="Enter Last Name" ng-model = "data.lastName" />   
+            <div class = "list"  id = "first_name" ng-if = "searchCriteria == 'first_name' ">
+                <label class = "item item-input">
+                    <div class = "input-label">
+                        First Name : 
+                    </div>
+                    <input type="text" id="firstName_search"  placeholder="Enter First Name" ng-model = "data.firstName" /> 
+                </label>
             </div>
             
-            <div ng-if = "searchCriteria != '' ">
-                <button ng-click = "doSearch();"> SEARCH </button>
+            <div class = "list" id = "last_name" ng-if = "searchCriteria == 'last_name' ">
+                <label class = "item item-input">
+                    <div class = "input-label">
+                        Last Name : 
+                    </div>
+                   <input id="lastName_search" type="text" placeholder="Enter Last Name" ng-model = "data.lastName" />  
+                </label>
+            </div>
+            
+        
+            <div ng-if = "searchCriteria != '' " class="col text-center">
+                <button class="button button-royal button-positive" ng-click = "doSearch();"> SEARCH </button>
              </div>
+            
+            
+            
+            <div ng-if = "showResult" >
+                <ion-list>
+                    <ion-item ng-repeat="emp in empList" type="item-text-wrap" class="item-avatar"
+                       ng-click = "showAlert($index);">
+                        <img src="img/emp_img.jpg"/>
+                        {{emp.last_name}} , {{emp.first_name}} 
+                    </ion-item>
+                </ion-list>
+            </div>
             
         </form>  
       </div>
