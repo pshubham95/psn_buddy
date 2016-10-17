@@ -8,10 +8,7 @@ define([
 	}]);
   
 	app.controller('SideMenuCtrl', ['$scope', '$rootScope', '$ionicSideMenuDelegate',function($scope, $rootScope, $ionicSideMenuDelegate){
-		  $rootScope.menuItems = [{
-			  				name:"Dash Board",url:"/dashboard"},
-			  				{name:"Floor Map",url:"/floormap"},
-			  				{name: "Find My Location", url: "/findmylocation"}];
+		  $rootScope.menuItems = [];
 		  
 		  $rootScope.toggleLeft = function() {
 	    	    $ionicSideMenuDelegate.toggleLeft();

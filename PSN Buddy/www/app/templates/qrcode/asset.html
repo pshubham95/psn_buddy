@@ -1,0 +1,36 @@
+<ion-view title="Assets">
+	<ion-nav-buttons side="right">
+       	<button class="button button-icon icon ion-qr-scanner">
+			<span class="badge badge-assertive" ng-bind="qrCart.length"></span>
+		</button>
+     </ion-nav-buttons>
+	<ion-content class="has-header" id="addAsset">
+		<ion-spinner ng-if="!assets"></ion-spinner>
+		<div ng-if="assets">
+			<div class="card" ng-if="assets.length==0">
+			  <div class="item item-text-wrap no-items">
+			    No Assets Added. Please add some.
+			  </div>
+			</div>
+			<ion-list can-swipe="true">
+				<ion-item ng-init="asset.addToCart=checkIfItemAddedToCart(asset)" class="item item-icon-left item-icon-right" ng-repeat="asset in assets track by $index">
+					    <div ng-click="toggleAddToCart(asset)">
+							<a ng-class="{'ion-ios-checkmark': asset.addToCart, 'ion-ios-circle-outline': !asset.addToCart}" class="button button-icon positive icon"></a>
+						    <h2 ng-bind="asset.name"></h2>
+		   					<p>Enabled: {{asset.is_enabled ? 'Yes' : 'No'}} </p>
+					    </div>
+				    	<button class="button button-icon icon ion-qr-scanner"></button>
+				    	 <ion-option-button class="button-positive" ng-click="toggleAssetEnable(asset)">
+					      {{asset.is_enabled ? 'Disable' : 'Enable'}}
+					    </ion-option-button>
+					    <ion-option-button class="button-assertive" ng-click="deleteAsset(asset)">
+					      Delete
+					    </ion-option-button>
+				</ion-item>
+			</ion-list>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-positive">
+  		<button class="button button-clear" ng-click="showAddAssetModal()">Add Asset</button>
+	</ion-footer-bar>
+</ion-view>

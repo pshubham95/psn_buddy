@@ -1,0 +1,19 @@
+<ion-modal-view>
+	<ion-header-bar align-title="center" class="bar-positive">
+	  <h1 class="title">Add Asset</h1>
+	  <button class="button button-clear button-primary" ng-click="modal.hide()">Close</button>
+	</ion-header-bar>
+	<ion-content>
+	<div class="list list-inset">
+		<form name="addAssetForm" ng-submit="addAsset(addAssetForm)" class="list no-margin" novalidate="" >
+		  	<label class="item item-input">
+		    	<input type="text" name="assetName" placeholder="Asset Name" ng-model="asset.name" required>
+		  	</label>
+			<ion-toggle toggle-class="toggle-calm" ng-model="asset.isEnabled">Enabled</ion-toggle>
+			<ion-toggle toggle-class="toggle-calm" ng-model="asset.isAllocatedToEmp">Allocated to Employee</ion-toggle>
+			<button type="submit" ng-disabled="addAssetForm.$invalid" class="button button-block button-positive">Add Asset</button>
+		</form>
+	</div>
+	</ion-list>
+  </ion-content>
+</ion-modal-view>

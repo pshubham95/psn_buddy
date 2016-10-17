@@ -4,7 +4,11 @@ var require = {
 	'angular-resource': '../lib/ionic/js/angular/angular-resource.min',  
     'ionic': '../lib/ionic/js/ionic.bundle.min',
     'qrScanner': '../lib/qr-scanner/qr-scanner',
-    'jsqrcode': '../lib/qr-scanner/jsqrcode-combined.min'
+    'jsqrcode': '../lib/qr-scanner/jsqrcode-combined.min',
+    'underscore': '../lib/underscorejs/underscore',
+    'angular-underscore':'../lib/underscorejs/angular-underscore-module',
+    'angular-messages': '../lib/ionic/js/angular/angular-messages',
+    'angular-deckgrid': '../lib/angular-deckgrid'
     /*'webqr-grid': '../lib/webqr/grid',
     'webqr-version': '../lib/webqr/version',
     'webqr-detector': '../lib/webqr/detector',
@@ -30,6 +34,15 @@ var require = {
 	  },
 	  'qrScanner': {
 		  deps: ['ionic','jsqrcode']
+	  },
+	  'angular-underscore': {
+		  deps: ['underscore','ionic']
+	  },
+	  'angular-messages': {
+		  deps: ['ionic']
+	  },
+	  'angular-deckgrid': {
+		  deps: ['ionic']
 	  }
   }
   // if you are using jquery you have to add a shim for ionic and add jquery as deps

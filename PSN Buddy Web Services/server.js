@@ -16,12 +16,15 @@ console.log(connectionString);
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Accept');
     next();
 });
 
 app.get('/campusList/:city?', qrrage.getCampusList);
 app.get('/facilities/:campusId', qrrage.getFacilities);
-
+app.get('/assets/:facilityId', qrrage.getAssets);
+app.post('/assets/:facilityId', qrrage.addAsset);
+app.post('/assets/:facilityId/:assetId', qrrage.updateAsset);
 
 app.set('port', process.env.PORT || 5000);
 

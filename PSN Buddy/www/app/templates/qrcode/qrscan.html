@@ -1,0 +1,29 @@
+<ion-view title="QR Scan">
+	<ion-nav-buttons side="left">
+       <button class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
+     </ion-nav-buttons>
+     <ion-nav-buttons side="right">
+       <button class="button button-icon icon ion-qr-scanner"><span class="badge badge-assertive" ng-bind="qrCart.length"></span></button>
+     </ion-nav-buttons>
+     <ion-content class="has-header" id="qrCodeContent">
+		<ion-spinner ng-if="!facilityList"></ion-spinner>
+	  	<div ng-if="facilityList">
+		  	<ion-list>
+		  		<div ng-repeat="facility in facilityList track by $index">
+				  <div class="item item-divider" ng-bind="facility.name"></div>
+				  <ion-item class="item-icon-right" ng-href="#/asset/{{selectedCampus.id}}/{{facility.id}}">
+				  	Assets
+				  	<i class="icon ion-ios-arrow-right"></i>
+				  </ion-item>
+<!-- 					  <ion-item class="item-icon-right" ng-href="#/generateQR/{{selectedCampus.id}}/{{facility.id}}"> -->
+<!-- 					  	Generate QR -->
+<!-- 					  	<i class="icon ion-ios-arrow-right"></i> -->
+<!-- 					  </ion-item> -->
+		  		</div>
+			</ion-list>
+	  	</div>
+	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-positive">
+  		<button id="qrScanBtn" class="button button-clear" ng-click="launchQrScanner()">Scan QR Code</button>
+	</ion-footer-bar>
+</ion-view>

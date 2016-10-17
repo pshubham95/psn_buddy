@@ -1,7 +1,10 @@
 define([ 'app',
 // Load Controllers here
-'controllers/dashboard', 'controllers/addAsset', 'controllers/floorMap',
-		'controllers/employeeFinder' ],
+     	'controllers/dashboard', 
+     	'controllers/asset', 
+     	'controllers/floorMap',
+		'controllers/employeeFinder',
+		'controllers/qrscan'],
 
 function(app) {
 	'use strict';
@@ -20,11 +23,17 @@ function(app) {
 			templateUrl : 'app/templates/qrcode/dashboard.html',
 			controller : 'DashboardCtrl'
 		})
+		
+		.state('qrscan', {
+			url : '/qrscan',
+			templateUrl : 'app/templates/qrcode/qrscan.html',
+			controller : 'QRCtrl'
+		})
 
-		.state('addAsset', {
-			url : '/addAsset/:campusId/:facilityId',
-			templateUrl : 'app/templates/qrcode/add-asset.html',
-			controller : 'AddAssetCtrl'
+		.state('asset', {
+			url : '/asset/:campusId/:facilityId',
+			templateUrl : 'app/templates/qrcode/asset.html',
+			controller : 'AssetCtrl'
 		})
 
 		.state('floormap', {

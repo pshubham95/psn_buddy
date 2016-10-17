@@ -21,8 +21,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+@import "deckgrid";
+
 .bar-footer{
-	#qrScanBtn{
+	button{
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -34,14 +36,81 @@ ion-header-bar{
 	}
 	.ion-qr-scanner{
 		.badge{
-			top: -10px;
+		    top: -35px;
 		    padding: 0px;
 		    width: 20px;
 		    height: 20px;
 		    line-height: 20px;
-		    display: inline-block;
+		    margin-left: 0px;
+		    right: -18px;
 		}
 	}
+}
+ion-spinner{
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.card{
+	&.no-margin{
+		margin: 0px;
+		border-radius: 0px;
+		.item{
+			border-radius: 0px;
+		}
+	}
+	&#locationImgCard{
+		.item{
+			padding: 0px;
+			position: relative;
+			&.item-image{
+				img{
+					height: 100%;
+				}
+			}
+			.ion-ios-navigate{
+			    position: absolute;
+			    top: 0;
+			    right: 0;
+			}
+			.col{
+				padding: 0px;
+				text-align: center;
+			}
+			.location-details{
+			    position: absolute;
+			    bottom: 0;
+			    width: 100%;
+			    text-align: left;
+			    padding: 5px;
+			    color: white;
+			    background: rgba(0,0,0,0.6);
+			    font-size: 10pt;
+			}
+		}
+	}
+}
+.card-grid{
+	padding: 5px;
+	display: flex;
+	.card{
+		margin: 5px;
+	    display: inline-block;
+	    width: 50%;
+	}
+}
+@media only screen and (min-width: 600px) {
+    .card-grid{
+		.card{
+		    width: 33.3333%;
+		}
+	}
+}
+#locationSelect{
+    padding-top: 0px; 
+    padding-bottom: 0px;
+    border: 0px;
 }
 #qrCodeContent, ion-modal-view{
 	ion-spinner{
@@ -49,19 +118,50 @@ ion-header-bar{
 	    text-align: center;
 	    margin-top: 20px;
 	}
-	.card{
+	/*.card{
 		.item-text-wrap{
 			padding: 0px;
 			.col{
 				text-align: center;
 			}
 		}
-	}
+	}*/
 }
 qr-scanner{
 	video{
 		width: 100%    !important;
   		height: auto   !important;
+	}
+}
+ion-view[title='Assets']{
+	.button-light{
+		color: white;
+		border-color: white;
+	}
+}
+#addAsset{
+	.no-items{
+		text-align: center;
+	}
+	.item{
+		.ion-qr-scanner{
+			right: 0px;
+		}
+		.ion-ios-checkmark, .ion-ios-circle-outline{
+			left: 0px;
+		}
+		&.item-accordion {
+		  line-height: 38px;
+		  padding-top: 0;
+		  padding-bottom: 0;
+		  transition: 0.09s all linear;
+		}
+		&.ng-hide{
+		  line-height: 0px;
+		}
+		&.ng-hide-add, &.ng-hide-remove{
+		  display: block !important;
+		}
 	}
 }
 

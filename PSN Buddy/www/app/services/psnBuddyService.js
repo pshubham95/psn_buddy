@@ -3,11 +3,12 @@ define([
 ], function (app) {
   'use strict';
 
-  app.service('PsnBuddyService', ['$resource','$http','$q','$filter',
-    function ($resource, $http, $q, $filter) {
+  app.service('PsnBuddyService', ['$resource','$http','$q','$filter','_',
+    function ($resource, $http, $q, $filter,_) {
 	  var deferred = $q.defer();
     	this.campusList = null;
     	this.facilities = null;
+    	this.assets = null
     	this.getCampusList = function (options) {
     		if(this.campusList!=null){
     			var data = $filter('filter')(this.campusList,function(obj){
@@ -16,21 +17,17 @@ define([
     			deferred.resolve(data);
     		}else{
     			var me = this;
-    			if(options){
-    				$resource("http://localhost:5000/campusList/:city").query(options).$promise.then(function(data) {
-    					me.campusList = data;
-    					deferred.resolve(data);
-    				}); 			
-    			}else{
-    				$resource("http://localhost:5000/campusList/:city").query().$promise.then(function(data) {
-    					me.campusList = data;
-    					deferred.resolve(data);
-    				});
-    			}
-    			return deferred.promise;
+    			var promiseObj = options ? $resource("http://localhost:5000/campusList/:city",null,{'query':  {method:'GET', isArray:false}}).query(options) : $resource("http://localhost:5000/campusList/:city",null,{'query':  {method:'GET', isArray:false}}).query({isArray: false})
+				promiseObj.$promise.then(function(response) {
+					me.campusList = response.data;
+					deferred.resolve(response.data);
+				},function(err, response){
+					deferred.reject(response);
+				});
     		}
+    		return deferred.promise;
     	};
-    	    	
+    	    	    	
     	this.getCurrentCity = function(position) {
     		var URL = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + '%2C' + position.coords.longitude + '&language=en';
     		var deferred = $q.defer();
@@ -42,34 +39,78 @@ define([
     			console.log(cityName);
             }).error(function(data, status) {
               deferred.reject(data || "Request failed");
-          });
+            });
     		return deferred.promise;
     	};
     	    	
     	this.getFacilities = function(options){
     		var deferred = $q.defer();
-    		if(this.facilities != null){
-    			var data = $filter('filter')(this.facilities,function(obj){
-    				obj.campus_id == options.campusId;
-    			});
-    			if(data.length<=0){
-        			var me = this;
-    				$resource("http://localhost:5000/facilities/:campusId").query(options).$promise.then(function(data) {
-    					me.facilities.push(data);
-    					deferred.resolve(data);
-    				}); 			
-        			//return deferred.promise;
-    			}else{
-    				deferred.resolve(data);    				
-    			}
+    		var facilities = _.findWhere(this.campusList,{id: options.campusId}).facilities;
+    		if(facilities){
+				deferred.resolve(facilities);    				
     		}else{
-    			var deferred = $q.defer();
     			var me = this;
-				$resource("http://localhost:5000/facilities/:campusId").query(options).$promise.then(function(data) {
-					me.facilities = angular.fromJson(data);
-					deferred.resolve(angular.fromJson(data));
+				$resource("http://localhost:5000/facilities/:campusId",null,{'query':  {method:'GET', isArray:false}})
+				.query(options)
+				.$promise
+				.then(function(response) {
+					_.findWhere(me.campusList,{id: options.campusId}).facilities = response.data;
+					deferred.resolve(response.data);
 				}); 			
     		}
+    		return deferred.promise;
+    	};
+    	this.getAssets = function(options){
+    		var deferred = $q.defer();
+    		var assets = _.findWhere(_.findWhere(this.campusList,{id: options.campusId}).facilities,{id: options.facilityId}).assets;
+    		if(assets){
+    			deferred.resolve(assets);
+    		}else{
+    			var me = this;
+				$resource("http://localhost:5000/assets/:facilityId", null, {'query':  {method:'GET', isArray:false}})
+					.query({facilityId: options.facilityId})
+					.$promise.then(function(response) {
+						_.findWhere(_.findWhere(me.campusList,{id: options.campusId}).facilities,{id: options.facilityId}).assets = response.data;
+						deferred.resolve(response.data);
+					}); 	
+    		}
+    		return deferred.promise;
+    	};
+    	
+    	this.addAsset = function(options){
+    		var deferred = $q.defer();
+    		var me = this;
+    		$resource("http://localhost:5000/assets/:facilityId", {facilityId: options.facilityId})
+    				.save({}, options)
+    				.$promise.then(function(data){
+    					deferred.resolve(data);
+    					_.findWhere(_.findWhere(me.campusList,{id: options.campusId}).facilities,{id: options.facilityId}).assets = data.data;
+    					console.log(data)
+    				},function(err, response){
+    					deferred.reject(response);
+    					console.log(err,response);
+    				})
+			return deferred.promise;
+    	};
+    	
+    	this.updateAsset = function(options){
+    		var deferred = $q.defer();
+    		var me = this;
+    		$resource("http://localhost:5000/assets/:facilityId/:assetId", {facilityId: options.facility_id, assetId: options.id})
+    			.save({}, options)
+    			.$promise.then(function(data){
+    				var obj = _.findWhere(
+						_.findWhere(
+								_.findWhere(me.campusList,{id: options.campusId}).facilities, {id: options.facility_id}
+						).assets, {id: options.id}
+    				); 
+    				obj.name = data.data[0].name;
+    				obj.is_enabled = data.data[0].is_enabled;
+    				obj.is_allocated_to_employee = data.data[0].is_allocated_to_employee;
+    				deferred.resolve(data);
+    			},function(err, response){
+    				deferred.reject(response);
+    			})
     		return deferred.promise;
     	};
     }

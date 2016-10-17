@@ -1,4 +1,4 @@
-<ion-view title="Dashboard">
+<ion-view title="Home">
 <!--  	<ion-header-bar align-title="left" class="bar-positive"> -->
 <!-- 		<button class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button> -->
 <!--   		<h1 class="title">Dashboard</h1> -->
@@ -8,41 +8,89 @@
        <button class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
      </ion-nav-buttons>
      <ion-nav-buttons side="right">
-       <button class="button button-icon icon ion-qr-scanner"><span class="badge badge-assertive">5</span></button>
+       <button class="button button-icon icon ion-qr-scanner"><span class="badge badge-assertive" ng-bind="qrCart.length"></span></button>
      </ion-nav-buttons>
 	<ion-content class="has-header" id="qrCodeContent">
 		<ion-spinner ng-if="!campusList"></ion-spinner>
 		<div ng-if="campusList">
-			<label class="item item-input item-select">
-		    	<div class="input-label">
-			      Current Location
+		  	<div class="list card no-margin" id="locationImgCard">
+			  <div class="item item-image" ng-style="{'height': windowHeightStyle + 'px'}">
+			    <img src="img/ge-healthcare.jpg">
+			    <div class="location-details">{{selectedCampus.name}}</div>
+			    <a class="button button-icon icon ion-ios-navigate dark"></a>
+			  </div>
+			  <div class="item">
+			    <div class="row">
+			    	<div class="col">
+			    		<button class="button icon-left ion-person button-clear button-positive" ng-bind="iscurrentUserTypeVisitor ? 'Visitor' : 'Employee'" ng-click="toggleUserType()">
+						</button>
+			    	</div>
+			    	<div class="col">
+			    		<button class="button icon-left ion-location button-clear button-positive"  ng-click="showChangeLocationPopUp()">
+						  Change
+						</button>
+			    	</div>
+			    	<div class="col">
+			    		<button class="button icon-left ion-map button-clear button-positive">
+						  Explore
+						</button>
+			    	</div>
 			    </div>
-			    <select ng-options="campus.id as campus.name for campus in campusList" ng-model="selectedCampus.id" ng-change="selected_name=(campusList|filter:{id:selectedCampus.id})[0].name">
-			    	<option value="">Choose Facility</option>
-			    </select>
-<!-- 			    <select> -->
-<!-- 			      <option ng-repeat="campus in campusList" ng-bind="'{{campus.name}}' + ', '+'{{campus.city}}'"></option> -->
-<!-- 			    </select> -->
-		  	</label>
-		  	<div ng-if="facilityList">
-			  	<ion-list >
-			  		<div ng-repeat="facility in facilityList track by $index">
-					  <div class="item item-divider" ng-bind="facility.name"></div>
-					  <ion-item class="item-icon-right" ng-href="#/addAsset/{{selectedCampus.id}}/{{facility.id}}">
-					  	Add Asset
-					  	<i class="icon ion-ios-arrow-right"></i>
-					  </ion-item>
-					  <ion-item class="item-icon-right" ng-href="#/generateQR/{{selectedCampus.id}}/{{facility.id}}">
-					  	Generate QR
-					  	<i class="icon ion-ios-arrow-right"></i>
-					  </ion-item>
-			  		</div>
-				</ion-list>
-		  	</div>
-		  	<ion-spinner ng-if="!facilityList"></ion-spinner>
+			  </div>
+			</div>
+			<div deckgrid class="deckgrid" source="cardOptions" ng-if="cardOptions.length>1">
+			    <div class="card">
+				  <div class="item item-image">
+				    <img src="" data-ng-src="img/{{card.thumbnail}}">
+				  </div>
+				  <a class="item assertive" menu-close ng-href="#{{card.url}}">
+				    <h3 class="positive" ng-bind="card.label"></h2>
+<!-- 				    <p>Start listening</p> -->
+				  </a>
+				</div>
+			</div>
+			<div class="card" ng-if="cardOptions.length<=1" ng-repeat="item in cardOptions track by $index">
+			  <div class="item item-image">
+			    <img src="" data-ng-src="img/{{item.thumbnail}}">
+			  </div>
+			  <a class="item assertive" menu-close ng-href="#{{item.url}}">
+			    <h3 class="positive" ng-bind="item.label"></h2>
+<!-- 				    <p>Start listening</p> -->
+			  </a>
+			</div>
+
+<!-- 		  	<div class="card-grid"> -->
+<!-- 		  		<div class="card"> -->
+<!-- 				  <div class="item item-image"> -->
+<!-- 				    <img src="cover.jpg"> -->
+<!-- 				  </div> -->
+				
+<!-- 				  <a class="item assertive" href="#"> -->
+<!-- 				    <h3 class="positive">Book a Mobile Desk</h2> -->
+<!-- 				    <p>Start listening</p> -->
+<!-- 				  </a> -->
+<!-- 				</div> -->
+<!-- 		  		<div class="card"> -->
+<!-- 				  <div class="item item-image"> -->
+<!-- 				    <img src="cover.jpg"> -->
+<!-- 				  </div> -->
+				
+<!-- 				  <a class="item assertive" href="#"> -->
+<!-- 				    <h3 class="positive">Book a Mobile Desk</h2> -->
+<!-- 				    <p>Start listening</p> -->
+<!-- 				  </a> -->
+<!-- 				</div> -->
+<!-- 		  		<div class="card"> -->
+<!-- 				  <div class="item item-image"> -->
+<!-- 				    <img src="cover.jpg"> -->
+<!-- 				  </div> -->
+				
+<!-- 				  <a class="item assertive" href="#"> -->
+<!-- 				    <h3 class="positive">Book a Mobile Desk</h2> -->
+<!-- 				    <p>Start listening</p> -->
+<!-- 				  </a> -->
+<!-- 				</div> -->
+<!-- 		  	</div> -->
 		</div>
 	</ion-content>
-	<ion-footer-bar align-title="center" class="bar-positive">
-  		<button id="qrScanBtn" class="button button-clear" ng-click="launchQrScanner()">Scan QR Code</button>
-	</ion-footer-bar>
 </ion-view>

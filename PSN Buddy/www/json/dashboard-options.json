@@ -1,0 +1,51 @@
+[
+	{
+	  "label": "Home",
+	  "thumbnail": "mobile-desk.jpg",
+	  "url": "/dashboard",
+	  "isSSOprotected": false,
+	  "isVisibleAsCard": false
+	}, {
+	  "label": "Getting Here",
+	  "thumbnail": "mobile-desk.jpg",
+	  "url": "",
+	  "isSSOprotected": false,
+	  "isVisibleAsCard": false
+	}, {
+	  "label": "Book Mobile Desk",
+	  "thumbnail": "mobile-desk.jpg",
+	  "url": "",
+	  "isSSOprotected": true,
+	  "isVisibleAsCard": true
+	}, {
+	  "label": "QR Scanner",
+	  "thumbnail": "qr-scan.jpeg",
+	  "url": "/qrscan",
+	  "isSSOprotected": true,
+	  "isVisibleAsCard": true
+  	}, {
+	  "label": "Register Visitor",
+	  "thumbnail": "cover.jpg",
+	  "url": "",
+	  "isSSOprotected": true,
+	  "isVisibleAsCard": true
+  	}, {
+	  "label": "In Neighborhood",
+	  "thumbnail": "cover.jpg",
+	  "url": "",
+	  "isSSOprotected": false,
+	  "isVisibleAsCard": false
+  	}, {
+	  "label": "Floor Map",
+	  "thumbnail": "cover.jpg",
+	  "url": "/floormap",
+	  "isSSOprotected": true,
+	  "isVisibleAsCard": true
+  	}, {
+	  "label": "Find Employee",
+	  "thumbnail": "cover.jpg",
+	  "url": "/findmylocation",
+	  "isSSOprotected": true,
+	  "isVisibleAsCard": true
+  	}
+]

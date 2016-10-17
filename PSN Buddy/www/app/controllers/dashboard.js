@@ -1,8 +1,12 @@
-define(['app', 'services/psnBuddyService'], function (app) {
+define(['app', 'services/psnBuddyService', 'services/dashboardService'], function (app) {
   'use strict';
 
-  app.controller('DashboardCtrl', ['$scope', 'PsnBuddyService', '$ionicSideMenuDelegate', '$ionicPlatform', '$ionicModal','$timeout', '$filter',
-   function ($scope, PsnBuddyService, $ionicSideMenuDelegate, $ionicPlatform, $ionicModal,$timeout, $filter) {
+  app.controller('DashboardCtrl', ['$scope','_', '$rootScope', 'PsnBuddyService', '$ionicSideMenuDelegate',
+                                   '$ionicPlatform', '$ionicModal','$timeout', '$filter','$ionicPopup',
+                                   '$window','DashboardService',
+   function ($scope, _, $rootScope, PsnBuddyService, $ionicSideMenuDelegate, $ionicPlatform, $ionicModal,$timeout, $filter, $ionicPopup, $window, DashboardService) {
+	  $rootScope.qrCart = [];
+	  $rootScope.iscurrentUserTypeVisitor = true;
 	  $ionicModal.fromTemplateUrl('app/templates/qrcode/qrscanner-modal.html', {
 		  scope: $scope,
 		  animation: 'slide-in-up'
@@ -10,67 +14,66 @@ define(['app', 'services/psnBuddyService'], function (app) {
 		  $scope.modal = modal;
 		  $scope.isScannerOpen = false;
 	  });
-	  $scope.$watchCollection('selectedCampus', function (newValue, oldValue, scope) {
-		  if(newValue){
-			  PsnBuddyService.getFacilities({campusId : newValue.id}).then(function(data){
-				  console.log(data);
-				  $scope.facilityList = data;
-			  },function(err){
-				  console.log(err);
-			  });
-		  }
-	  });
+	  
+	  $scope.$watch('iscurrentUserTypeVisitor', function(newVal, oldVal){
+		  DashboardService.getDashboardOptions(!$rootScope.iscurrentUserTypeVisitor).then(function(response){
+			  console.log(response)
+			  $rootScope.menuItems = response;
+			  $scope.cardOptions = _.filter($rootScope.menuItems,{'isVisibleAsCard': true}); 
+		  }, function(err){
+			  console.log(err);
+		  });
+	  })
+	  
+	  $scope.toggleUserType = function() {
+		  $rootScope.iscurrentUserTypeVisitor = !$rootScope.iscurrentUserTypeVisitor;
+	  }
+	  
+	  $scope.showChangeLocationPopUp = function(){
+		  $scope.myPopup = $ionicPopup.show({
+		    templateUrl: 'app/templates/qrcode/change-location-modal.html',
+		    title: 'Change Location',
+		    scope: $scope,
+		    buttons: [
+		      { text: 'Cancel' }
+		    ]
+		  });
+	  };
+	  
+	  
+	  angular.element($window).bind('resize', function() {
+		  $scope.$apply(function(){
+			  $scope.windowHeightStyle = ($window.innerHeight/2)-100;
+		  })
+      })
+	  
+	  $scope.changeLocation = function(campus){
+		  $rootScope.selectedCampus = campus;
+		  $scope.myPopup.close();
+	  };
 
 	  navigator.geolocation.getCurrentPosition(function(position){
 		  console.log(position)
 		  PsnBuddyService.getCurrentCity(position).then(function(data){
-			  PsnBuddyService.getCampusList({city: data.cityName, isArray: true}).then(function(data){
-				  $scope.campusList = data;
-				  console.log($scope.campusList);
-				  $scope.selectedCampus = $filter('filter')($scope.campusList,{name: 'PSN'})[0];
-				  console.log($scope.selectedCampus);
-			  },function(err){
-				  console.log(err);
-			  });
+			  $scope.getCityDetails(data);
 		  }, function(err){
 			  console.log(err);
 		  });
 	  }, function(err){
-		  console.log(err)
+		  console.log(err);
+		  $scope.getCityDetails();
 	  });
-	  // Cleanup the modal when we're done with it!
-	  $scope.$on('$destroy', function() {
-	    $scope.modal.remove();
-	  });
-	  // Execute action on hide modal
-	  $scope.$on('modal.hidden', function() {
-		  $timeout(function(){
-			  $scope.isScannerOpen = false;
-		  },500);
-	  });
-	  // Execute action on remove modal
-	  /*$scope.$on('modal.removed', function() {
-	    // Execute action
-	  });*/
-      $scope.launchQrScanner = function (){
-    	  if(!ionic.Platform.isWebView()){
-    		  $scope.modal.show();
-    		  $timeout(function(){
-    			  $scope.isScannerOpen = true;    			  
-    		  },1000);
-    	  }else{
-    		  cordova.plugins.barcodeScanner.scan(
-			      function (result) {
-			          alert("We got a barcode\n" +
-			                "Result: " + result.text + "\n" +
-			                "Format: " + result.format + "\n" +
-			                "Cancelled: " + result.cancelled);
-			      }, 
-			      function (error) {
-			          alert("Scanning failed: " + error);
-			      }
-		      );
-    	  }
-      };
+	  
+	  $scope.getCityDetails = function(data){
+		  var promise = data ? PsnBuddyService.getCampusList({city: data.cityName}) : PsnBuddyService.getCampusList();
+		  promise.then(function(data){
+			  $scope.campusList = data;
+			  console.log($scope.campusList);
+			  $rootScope.selectedCampus = $filter('filter')($scope.campusList,{name: 'PSN'})[0];
+			  console.log($scope.selectedCampus);
+		  },function(err){
+			  console.log(err);
+		  });  
+	  };
   }]);
 });
