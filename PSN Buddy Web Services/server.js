@@ -30,6 +30,7 @@ app.post('/assets/:facilityId/:assetId', qrrage.updateAsset);
 //the asset handler services here
 app.get('/assetHandler/getPhone',assetHandler.getPhoneDetail);
 app.post('/assetHandler/makeRequest',assetHandler.AssetServiceRequest);
+app.get('/workFlow/:assetId',formDetails.getFormDetails);
 
 app.set('port', process.env.PORT || 5000);
 

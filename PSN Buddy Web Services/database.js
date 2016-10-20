@@ -29,6 +29,9 @@ db.tx(function () {
 		this.none('CREATE TABLE psn.assets(id serial NOT NULL,'+
 						  					'facility_id integer,'+
 					  						'name character(20),'+
+                                            'contact_person character(30),'+
+                                            'contact_number numeric,'+
+                                            'contact_email character(20),'+
 					  						'is_enabled boolean,'+
 					  						'is_allocated_to_employee boolean NOT NULL,'+
 					  						'CONSTRAINT assets_pkey PRIMARY KEY (id),'+
