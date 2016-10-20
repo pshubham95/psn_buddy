@@ -27,6 +27,7 @@ app.get('/assets/:facilityId', qrrage.getAssets);
 app.post('/assets/:facilityId', qrrage.addAsset);
 app.post('/assets/:facilityId/:assetId', qrrage.updateAsset);
 
+//the asset handler services here
 app.get('/assetHandler/getPhone',assetHandler.getPhoneDetail);
 app.post('/assetHandler/makeRequest',assetHandler.AssetServiceRequest);
 

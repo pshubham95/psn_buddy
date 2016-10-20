@@ -3,6 +3,7 @@ var path = require('path');
 
 var connectionString = require(path.join(__dirname, '../', 'config'));
 
+//
 exports.getPhoneDetail = function(req,res,next)
 {
     var phone = '+91 9767416034';
@@ -24,11 +25,7 @@ exports.AssetServiceRequest = function(req,res,next)
         }
         
         
-        client.query("INSERT INTO psn.asset_requests(asset_id, asset_actions_id, requester_sso, requester_name)VALUES ($1, $2, $3, $4);",[data.asset_id,data.asset_action_id,data.user_sso,data.user_name],function(err,result)
-                    {
-            console.log('failed');
-            //return res.status(500).json({'status':'Request Creation Failed','errorText':err});
-        });
+        client.query("INSERT INTO psn.asset_requests(asset_id, asset_actions_id, requester_sso, requester_name,description,other_asset_action)VALUES ($1, $2, $3, $4,$5,$6);",[data.asset_id,data.asset_action_id,data.user_sso,data.user_name,data.description,data.other_asset_action]);
         done();
         return res.status(200).json({'status':'Request Created Successfully.'});
         
