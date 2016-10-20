@@ -1,0 +1,67 @@
+<ion-view title="Work Flow" id="workflow" class=" ">
+
+    <ion-nav-buttons side="left">
+      <button class="button button-icon icon ion-navicon" ng-click="toggleLeft()"></button>
+    </ion-nav-buttons>
+    
+    <ion-content padding="true" class="has-header">
+      <div>
+          <!--Start from here-->
+          <form>
+              
+          <div class = "" id = "">
+                <label class="item item-input">
+                <span class="input-label">Item Selected: </span>
+                <input type="text">
+              </label>
+              <br>
+              <div class="list">
+                <label class = "item item-input item-select item-stable">
+                    <div class = "input-label" style="width:30">
+                        Select the Action :
+                    </div>
+                    <select id ="" ng-model="selectedAction" ng-change="getSelectedAction(selectedAction);">
+                        <option ng-repeat="action in actions" value="{{action.action_name}}">{{action.action_name}}</option>
+                    </select>
+                </label>
+            </div>
+              <div class = "list" ng-style = "otherActionStyle">
+              <label class = "item item-input">
+                    <div class = "input-label">
+                        Other : 
+                    </div>
+                    <input id="" type="text" /> 
+                </label>
+              </div>
+              <div class = "" id = "">
+              <label class = "item item-input">
+                    <div class = "input-label">
+                        Person Incharge : 
+                    </div>
+                    <input id="" type="text" /> 
+                </label> 
+              </div>
+              <br>
+              <div class = "" id = "">
+              <label class = "item item-input">
+                    <div class = "input-label">
+                        Comments : 
+                    </div>
+                    <input id="" type="text" /> 
+                  </label>
+              </div>
+              <br>
+            </div>
+              <div class="item item-input-inset">
+                  <button class="button button-full button-balanced">
+                    call
+                    </button>
+                  
+                  <button  class="button button-full button-positive">
+                    send
+                    </button>
+              </div>
+          </form>
+      </div>
+    </ion-content>
+</ion-view>
