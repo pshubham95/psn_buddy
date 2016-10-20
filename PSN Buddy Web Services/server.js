@@ -1,5 +1,6 @@
 var express = require('express'),
 qrrage = require('./routes/qrrage'),
+assetHandler = require('./routes/assetHandler'),
 bodyParser = require('body-parser'),
 path = require('path'),
 app = express();
@@ -25,6 +26,9 @@ app.get('/facilities/:campusId', qrrage.getFacilities);
 app.get('/assets/:facilityId', qrrage.getAssets);
 app.post('/assets/:facilityId', qrrage.addAsset);
 app.post('/assets/:facilityId/:assetId', qrrage.updateAsset);
+
+app.get('/assetHandler/getPhone',assetHandler.getPhoneDetail);
+app.post('/assetHandler/makeRequest',assetHandler.AssetServiceRequest);
 
 app.set('port', process.env.PORT || 5000);
 
