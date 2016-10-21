@@ -1,5 +1,6 @@
 var express = require('express'),
 qrrage = require('./routes/qrrage'),
+formDetails = require('./routes/formDetails'),
 assetHandler = require('./routes/assetHandler'),
 bodyParser = require('body-parser'),
 path = require('path'),
