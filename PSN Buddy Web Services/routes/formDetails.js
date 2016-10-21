@@ -29,7 +29,7 @@ exports.getFormDetails = function (req, res, next) {
 			results.push(row);
 		});
 
-        query = client.query("SELECT id, name FROM psn.asset_actions where asset_id=($1)", [asid]);
+        query = client.query("SELECT id, name FROM psn.assets_actions where asset_id=($1)", [asid]);
 
 		query.on('row', function(row) {
 			actions.push(row);
