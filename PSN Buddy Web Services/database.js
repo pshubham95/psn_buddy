@@ -57,9 +57,9 @@ db.tx(function () {
                     'other_asset_action character(30));'),
     
       this.none('ALTER TABLE ONLY psn.asset_requests ADD CONSTRAINT id PRIMARY KEY (id);'),  
-      this.none('ALTER TABLE ONLY psn.asset_requests ADD CONSTRAINT asset_actions_id FOREIGN KEY (asset_actions_id) REFERENCES assets_actions(id);'),
+      this.none('ALTER TABLE ONLY psn.asset_requests ADD CONSTRAINT asset_actions_id FOREIGN KEY (asset_actions_id) REFERENCES psn.assets_actions(id);'),
     
-      this.none('ALTER TABLE ONLY psn.asset_requests ADD CONSTRAINT asset_id FOREIGN KEY (asset_id) REFERENCES assets(id);'),
+      this.none('ALTER TABLE ONLY psn.asset_requests ADD CONSTRAINT asset_id FOREIGN KEY (asset_id) REFERENCES psn.assets(id);'),
 
       this.none('INSERT INTO psn.campus(name, country, state, city) VALUES ($1, $2, $3, $4);',["psn", "India", "Karnataka","Bengaluru"]),
     
